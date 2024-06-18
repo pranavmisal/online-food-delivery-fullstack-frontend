@@ -27,6 +27,7 @@ export class CartComponent {
   public clearCart(){
     this.cartService.clearCart();
     this.cartItems = [];
+    this.notificationService.showError('Cart is empty');
   }
 
   public incrementQuantity(item: {menuItem: Menu, quantity: number}){
@@ -38,6 +39,13 @@ export class CartComponent {
     if (item.quantity > 0) {
       this.cartService.addToCart(item.menuItem, -1);
       item.quantity;
+      if (item.quantity === 0){
+        this.cartService.removeFromCart(item.menuItem);
+        this.cartItems = this.cartService.getCartItems();
+        if (this.cartItems.length === 0) {
+          this.notificationService.showError('Cart is empty')
+        }
+      }
     }
   }
 

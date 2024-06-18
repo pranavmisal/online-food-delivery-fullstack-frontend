@@ -19,10 +19,17 @@ export class CartService {
     const existingItem = this.cart.find(item => item.menuItem.id === menuItem.id);
     if (existingItem){
       existingItem.quantity += quantity;
+      if (existingItem.quantity <= 0){
+        this.removeFromCart(existingItem.menuItem);
+      }
     } else {
       this.cart.push({menuItem, quantity});
     }
     this.itemAdded.emit(menuItem);
+  }
+
+  public removeFromCart(menuItem: Menu){
+    this.cart = this.cart.filter(item => item.menuItem.id !== menuItem.id);
   }
 
   public getCartItems(){
