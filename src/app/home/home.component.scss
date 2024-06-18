@@ -1,0 +1,21 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  .content {
+    padding: 16px;
+  }
+  
+  /* home.component.css */
+
+.restaurant-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.restaurant-card:hover {
+  background-color: #f0f0f0;
+}

@@ -1,0 +1,7 @@
+<div class="review-rating-input">
+    <textarea class="review-input" [(ngModel)]="review" placeholder="Write your review here..."></textarea>
+    <div class="star-rating">
+        <span class="star" *ngFor="let star of stars; let i = index" (click)="rate(i + 1)" [class.filled]="i < selectedStarIndex">&#9733;</span>
+    </div>
+    <button class="submit-button" (click)="submitReview()">Submit</button>
+</div>

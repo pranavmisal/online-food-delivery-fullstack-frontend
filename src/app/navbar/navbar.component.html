@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <a routerLink="/home" style="text-decoration: none; color: inherit;">
+            <span>My Food Delivery App</span>
+        </a>
+        <span class="spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/login">Login</button>
+            <button mat-menu-item routerLink="/signup">Sign Up</button>
+        </mat-menu>
+        <div *ngIf="user" class="user-details" style="display: flex; background: #bcbcbc80;">
+            <p>Username: {{user.username}}</p>
+            <p>Email: {{user.email}}</p>
+            <button mat-raised-button color="primary" (click)="goToProfile()">Profile</button>
+            <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+        </div>
+        <!-- Cart icon -->
+        <button mat-icon-button routerLink="/cart">
+            <mat-icon>shopping_cart</mat-icon>
+            <mat-badge *ngIf="totalItemCount > 0" [matBadge]="totalItemCount" matBadgeSize="small" matBadgeColor="accent"></mat-badge>
+        </button>
+        <button *ngIf="isAdmin" mat-menu-item routerLink="/dashboard">Dashboard</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  
+  

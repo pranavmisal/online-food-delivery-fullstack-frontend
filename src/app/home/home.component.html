@@ -1,0 +1,34 @@
+<div class="restaurant-container" style="display: flex; flex-wrap: wrap;">
+  <mat-card *ngFor="let restaurant of restaurants" class="restaurant-card" (click)="selectRestaurant(restaurant)">
+    <mat-card-header>
+      <img mat-card-avatar [src]="restaurant.image_url" alt="Restaurant Image">
+      <mat-card-title>{{ restaurant.name }}</mat-card-title>
+      <mat-card-subtitle>{{ restaurant.address }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ restaurant.mobile }}</mat-card-subtitle>
+      <mat-card-subtitle>Rating: {{ restaurant.average_rating | number: '1.1-1' }}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<div *ngIf="selectedRestaurant" class="mt-4">
+  <h3>Menu Items for {{selectedRestaurant.name}}</h3>
+  <ul class="list-group" style="display: flex; list-style-type: none;">
+    <li class="list-group-item d-flex justify-content-between align-items-center" style="border: 1px solid lightgray; padding: 10px; border-radius: 5px; margin: 10px;" *ngFor="let menuItem of menus">
+      <div>
+        <h4 class="mb-1">{{menuItem.name}}</h4>
+        <p class="mb-1">{{menuItem.description}}</p>
+        <p class="mb-1">₹{{menuItem.price | number: '1.2-2'}}</p>
+        <div *ngIf="menuItem.id && [menuItem.id]">
+            <div><strong>Rating:</strong>{{getAverageRating(menuItem.id)}}</div>
+            <!-- <div><strong>Review:</strong>{{review.review}}</div> -->
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-outline-secondary btn-sm mr-2" (click)="decrementQuantity(menuItem.id!)">-</button>
+        <span>{{quantities[menuItem.id!]}}</span>
+        <button class="btn btn-outline-secondary btn-sm ml-2" (click)="incrementQuantity(menuItem.id!)">+</button>
+        <button class="btn btn-primary btn-sm ml-2" [disabled]="quantities[menuItem.id!] === 0" (click)="addToCart(menuItem)">Add</button>
+      </div>
+    </li>
+  </ul>
+</div>

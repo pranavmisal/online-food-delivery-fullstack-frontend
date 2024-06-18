@@ -1,0 +1,23 @@
+<h2>Manage Menu for {{data.restaurant.name}}</h2>
+
+<form (ngSubmit)="saveMenu()" #menuForm="ngForm">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="menu.name" name="name" required>
+    <mat-error *ngIf="menuForm.controls['name']?.invalid && menuForm.controls['name']?.touched">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="menu.description" name="description"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Price</mat-label>
+    <input matInput type="number" [(ngModel)]="menu.price" name="price" required>
+    <mat-error *ngIf="menuForm.controls['price']?.invalid && menuForm.controls['price']?.touched">
+      Price is required
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" [disabled]="menuForm.invalid">Save Menu Item</button>
+</form>

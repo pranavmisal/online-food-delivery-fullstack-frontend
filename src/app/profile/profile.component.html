@@ -1,0 +1,42 @@
+<div class="profile">
+  <h2>User Profile</h2>
+  <!-- profile details -->
+  <div *ngIf="user" class="profile-details">
+    <mat-card>
+      <mat-card-content>
+        <div><strong>Username:</strong> {{ user.username }}</div>
+        <div><strong>Full Name:</strong> {{ user.full_name }}</div>
+        <div><strong>Email:</strong> {{ user.email }}</div>
+        <div><strong>Mobile:</strong> {{ user.mobile_number }}</div>
+        <div><strong>Address:</strong> {{ user.address }}</div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="openEditProfileDialog()">Edit Profile</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <!-- order history -->
+  <div class="order-history">
+    <h2>Order History</h2>
+    <mat-card>
+      <mat-card-content>
+        <ul style="list-style-type: none; display: flex; flex-wrap: wrap;">
+          <li *ngFor="let order of orderHistory" style="margin: 10px; padding: 10px; border: 1px solid lightgray; border-radius: 5px;">
+            <div><strong>Order Date:</strong> {{ order.order_date | date: 'short' }}</div>
+            <div><strong>Restaurant:</strong> {{ order.restaurant_name }}</div>
+            <div><strong>Menu Item:</strong> {{ order.menu_item_name }}</div>
+            <div><strong>Quantity:</strong> {{ order.quantity }}</div>
+            <div><strong>Total Price:</strong> {{ order.total_price | currency: 'INR' }}</div>
+            <div *ngIf="!order.rating">
+              <app-review-rating (reviewSubmitted)="submitReviewRating($event, order)"></app-review-rating>
+            </div>
+            <div *ngIf="order.rating">
+              <div><strong>Your Rating:</strong>{{order.rating}}</div>
+              <div><strong>Your Review:</strong>{{order.review}}</div>
+            </div>
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
