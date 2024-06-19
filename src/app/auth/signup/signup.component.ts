@@ -9,7 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
-  public user = { username: '', fullName: '', email: '', mobile: '', password: '', address: '' };
+  public user = { 
+    username: '', 
+    fullName: '', 
+    email: '', 
+    mobile: '', 
+    password: '', 
+    address: {
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      country: ''
+    } 
+  };
 
   constructor(
     public authService: AuthService,

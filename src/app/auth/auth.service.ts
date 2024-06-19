@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { Address } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,13 +54,29 @@ export class AuthService {
     return of(null);
   }
   
+  // fetch current user from API or local storage
   public getCurrentUser(): any {
     return this.currentUserSubject.value;
+  }
+
+  // fetch addresses for the current user
+  public getUserAddresses(userId: number): Observable<Address[]>{
+    return this.http.get<Address[]>(`${this.apiUrl}/users/${userId}/addresses`);
   }
 
   // update the user profile
   public updateProfile(userId: string, userProfile: any): Observable<any>{
     return this.http.put(`${this.apiUrl}/profile/${userId}`, userProfile).pipe(
+      tap((updatedUser) => {
+        this.currentUserSubject.next(updatedUser);
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      })
+    );
+  }
+
+  // for updating the profile image
+  public updateProfileImage(userId: string, image: any): Observable<any>{
+    return this.http.put(`${this.apiUrl}/profile/${userId}/image`, image).pipe(
       tap((updatedUser) => {
         this.currentUserSubject.next(updatedUser);
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));

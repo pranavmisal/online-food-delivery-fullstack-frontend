@@ -5,6 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
 import { NotificationService } from '../services/notification.service';
+import { Address } from '../models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ import { NotificationService } from '../services/notification.service';
 export class ProfileComponent {
   public orderHistory: OrderHistory[] = [];
   public user: any;
+  public addresses: Address[] = [];
 
   constructor(
     public orderService: OrderService, 
@@ -28,12 +30,32 @@ export class ProfileComponent {
   }
 
   // fetch user details
+  // public fetchUserDetails(){
+  //   this.authService.currentUser$.subscribe(
+  //     (user) => {
+  //       if (user) {
+  //         this.user = user;
+          
+  //       }
+  //     }
+  //   );
+  // }
   public fetchUserDetails(){
-    this.authService.currentUser$.subscribe(
-      (user) => {
-        if (user) {
-          this.user = user;
-        }
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser){
+      this.user = currentUser;
+      this.fetchUserAddresses(currentUser.id);
+    }
+  }
+
+  // for fetch user address
+  public fetchUserAddresses(userId: number) {
+    this.authService.getUserAddresses(userId).subscribe(
+      (addresses: Address[]) => {
+        this.addresses = addresses;
+      },
+      error => {
+        console.error('Error fetching addresses:', error);
       }
     );
   }
