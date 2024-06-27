@@ -20,7 +20,7 @@ export class ReviewRatingComponent {
   }
 
   public submitReview(){
-    this.reviewSubmitted.emit({rating: this.selectedStarIndex, review: this.review});
+    this.reviewSubmitted.emit({rating: parseFloat(this.selectedStarIndex.toFixed(1)), review: this.review});
     this.review = '';
     this.selectedStarIndex;
   }

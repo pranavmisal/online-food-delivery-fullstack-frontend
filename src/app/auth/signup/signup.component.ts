@@ -14,15 +14,13 @@ export class SignupComponent {
     fullName: '', 
     email: '', 
     mobile: '', 
-    password: '', 
-    address: {
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: ''
-    } 
+    password: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: ''
   };
 
   constructor(

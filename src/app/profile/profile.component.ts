@@ -15,7 +15,6 @@ import { Address } from '../models/user.model';
 export class ProfileComponent {
   public orderHistory: OrderHistory[] = [];
   public user: any;
-  public addresses: Address[] = [];
 
   constructor(
     public orderService: OrderService, 
@@ -30,32 +29,13 @@ export class ProfileComponent {
   }
 
   // fetch user details
-  // public fetchUserDetails(){
-  //   this.authService.currentUser$.subscribe(
-  //     (user) => {
-  //       if (user) {
-  //         this.user = user;
-          
-  //       }
-  //     }
-  //   );
-  // }
   public fetchUserDetails(){
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser){
-      this.user = currentUser;
-      this.fetchUserAddresses(currentUser.id);
-    }
-  }
-
-  // for fetch user address
-  public fetchUserAddresses(userId: number) {
-    this.authService.getUserAddresses(userId).subscribe(
-      (addresses: Address[]) => {
-        this.addresses = addresses;
-      },
-      error => {
-        console.error('Error fetching addresses:', error);
+    this.authService.currentUser$.subscribe(
+      (user) => {
+        if (user) {
+          this.user = user;
+          
+        }
       }
     );
   }
@@ -100,6 +80,7 @@ export class ProfileComponent {
         const orderIndex = this.orderHistory.findIndex(o => o.id === updatedOrder.id);
         if (orderIndex !== -1){
           this.orderHistory[orderIndex] = updatedOrder;
+          this.orderHistory[orderIndex].rating = parseFloat(updatedOrder.rating.toFixed(1));
         }
         this.notificationService.showSuccess('Review submitted successfully');
       },

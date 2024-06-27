@@ -101,6 +101,6 @@ export class HomeComponent {
       return 0;
     }
     const totalRating = menuReviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating/menuReviews.length;
+    return parseFloat((totalRating/menuReviews.length).toFixed(1));
   }
 }

@@ -18,7 +18,27 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Address</mat-label>
-    <input matInput [(ngModel)]="data.user.address" name="address" required>
+    <input matInput [(ngModel)]="data.user.address_line1" name="address" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Address</mat-label>
+    <input matInput [(ngModel)]="data.user.address_line2" name="address" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>City</mat-label>
+    <input matInput [(ngModel)]="data.user.city" name="city" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>State</mat-label>
+    <input matInput [(ngModel)]="data.user.state" name="state" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Postal Code</mat-label>
+    <input matInput [(ngModel)]="data.user.postal_code" name="postal_code" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Country</mat-label>
+    <input matInput [(ngModel)]="data.user.country" name="country" required>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

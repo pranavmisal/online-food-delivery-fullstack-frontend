@@ -8,14 +8,14 @@
         <div><strong>Full Name:</strong> {{ user.full_name }}</div>
         <div><strong>Email:</strong> {{ user.email }}</div>
         <div><strong>Mobile:</strong> {{ user.mobile_number }}</div>
-        <div *ngFor="let address of addresses">
-          <div><strong>Address Line 1:</strong> {{ address.address_line1 }}</div>
-          <div><strong>Address Line 2:</strong> {{ address.address_line2 }}</div>
-          <div><strong>City:</strong> {{ address.city }}</div>
-          <div><strong>State:</strong> {{ address.state }}</div>
-          <div><strong>Postal Code:</strong> {{ address.postal_code }}</div>
-          <div><strong>Country:</strong> {{ address.country }}</div>
+        <div><strong>Address:</strong>
+          <span>{{ user.address_line1 }}</span> <br>
+          <span>{{ user.address_line2 }}</span>
         </div>
+        <div><strong>City:</strong> {{ user.city }}</div>
+        <div><strong>State:</strong> {{ user.state }}</div>
+        <div><strong>Postal Code:</strong> {{ user.postal_code }}</div>
+        <div><strong>Country:</strong> {{ user.country }}</div>
       </mat-card-content>
       <mat-card-actions>
         <button mat-button color="primary" (click)="openEditProfileDialog()">Edit Profile</button>
