@@ -1,15 +1,39 @@
 <h1>Login</h1>
-<form (ngSubmit)="login()" class="login-form">
+<form *ngIf="!showForgotPassword" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
   <mat-form-field appearance="fill">
     <mat-label>Email, Username or Mobile</mat-label>
-    <input matInput type="email" id="identifier" [(ngModel)]="credentials.identifier" name="identifier" required>
+    <input matInput formControlName="identifier" type="email" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput type="password" id="password" [(ngModel)]="credentials.password" name="password" required>
+    <input matInput formControlName="password" type="password" required>
   </mat-form-field>
 
   <button mat-raised-button color="primary" type="submit">Login</button>
+  <a mat-button (click)="toggleForgotPassword()">Forgot Password?</a>
 </form>
 
+<!-- forgot password form -->
+<div *ngIf="showForgotPassword" class="forgot-password-form">
+  <h2>Forgot Password</h2>
+  <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPasswordSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Email, Username or Mobile</mat-label>
+      <input matInput formControlName="identifier" type="text" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>New Password</mat-label>
+      <input matInput formControlName="newPassword" type="password" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput formControlName="confirmPassword" type="password" required>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading || forgotPasswordForm.invalid">Save</button>
+    <a mat-button (click)="toggleForgotPassword()">Cancel</a>
+  </form>
+</div>

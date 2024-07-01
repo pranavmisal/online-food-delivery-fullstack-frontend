@@ -1,59 +1,59 @@
 <h1>Sign Up</h1>
-<form (ngSubmit)="signup()" class="login-form">
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="login-form">
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
-    <input matInput type="text" id="username" [(ngModel)]="user.username" name="username" required>
+    <input matInput formControlName="username" type="text" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Full Name</mat-label>
-    <input matInput type="text" id="fullName" [(ngModel)]="user.fullName" name="fullName" required>
+    <input matInput formControlName="fullName" type="text" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input matInput type="email" id="email" [(ngModel)]="user.email" name="email" required>
+    <input matInput formControlName="email" type="email" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Mobile</mat-label>
-    <input matInput type="text" id="mobile" [(ngModel)]="user.mobile" name="mobile" required>
+    <input matInput formControlName="mobile" type="text" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput type="password" id="password" [(ngModel)]="user.password" name="password" required>
+    <input matInput formControlName="password" type="password" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Address Line 1</mat-label>
-    <textarea matInput id="addressLine1" [(ngModel)]="user.addressLine1" name="addressLine1" required></textarea>
+    <textarea matInput formControlName="addressLine1" required></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Address Line 2</mat-label>
-    <textarea matInput id="addressLine2" [(ngModel)]="user.addressLine2" name="addressLine2"></textarea>
+    <textarea matInput formControlName="addressLine2"></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>City</mat-label>
-    <input matInput type="text" id="city" [(ngModel)]="user.city" name="city" required>
+    <input matInput formControlName="city" type="text" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>State</mat-label>
-    <input matInput type="text" id="state" [(ngModel)]="user.state" name="state" required>
+    <input matInput formControlName="state" type="text" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Postal Code</mat-label>
-    <input matInput type="text" id="postalCode" [(ngModel)]="user.postalCode" name="postalCode" required>
+    <input matInput formControlName="postalCode" type="text" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Country</mat-label>
-    <input matInput type="text" id="country" [(ngModel)]="user.country" name="country" required>
+    <input matInput formControlName="country" type="text" required>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Sign Up</button>
+  <button mat-raised-button color="primary" type="submit" [disabled]="loading || signupForm.invalid">Sign Up</button>
 </form>

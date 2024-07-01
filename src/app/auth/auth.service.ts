@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
 import { Address } from '../models/user.model';
 
 @Injectable({
@@ -20,16 +20,30 @@ export class AuthService {
 
   // for login
   public login(credentials: any): Observable<any> {
-    if (this.currentUserSubject.value){
+    if (this.currentUserSubject.value) {
       return throwError(() => new Error('User is already logged in.'));
     }
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap(user => {
         this.currentUserSubject.next(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
+      }),
+      catchError(error => {
+        if (error.status === 401) {
+          if (error.error.message === 'Invalid username') {
+            return throwError(() => new Error('Username is incorrect.'));
+          } else if (error.error.message === 'Invalid password') {
+            return throwError(() => new Error('Password is incorrect.'));
+          } else {
+            return throwError(() => new Error('Authentication failed.'));
+          }
+        } else {
+          return throwError(() => error);
+        }
       })
     );
   }
+  
 
   // for signup
   public signup(user: any): Observable<any> {
@@ -85,5 +99,18 @@ export class AuthService {
         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
       })
     );
+  }
+
+  // forgot password
+  public forgotPassword(identifier: string, newPassword: string): Observable<any>{
+    return this.http.post(`${this.apiUrl}/forgot-password`, {identifier, newPassword}).pipe(
+      tap(response => {
+        console.log('Forgot password response:', response);
+      }),
+      catchError(error => {
+        console.error('Error in forgot password:', error);
+        return throwError(() => error);
+      })
+    )
   }
 }

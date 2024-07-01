@@ -23,4 +23,12 @@ export class NotificationService {
       panelClass: ['error-snackbar']
     });
   }
+
+  // for warning
+  public showWarning(message: string) {
+    this.snackbar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['warning-snackbar']
+    });
+  }
 }
