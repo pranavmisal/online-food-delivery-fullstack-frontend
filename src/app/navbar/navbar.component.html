@@ -8,8 +8,8 @@
             <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="/login">Login</button>
-            <button mat-menu-item routerLink="/signup">Sign Up</button>
+            <button mat-menu-item routerLink="/login" [disabled]="user">Login</button>
+            <button mat-menu-item routerLink="/signup" [disabled]="user">Sign Up</button>
         </mat-menu>
         <div *ngIf="user" class="user-details" style="display: flex; background: #bcbcbc80;">
             <p>Username: {{user.username}}</p>

@@ -25,7 +25,11 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },
       error => {
-        this.notificationService.showError('Login failed: ' + error.error.message)
+        if (error.message === 'User is already logged in.'){
+          this.notificationService.showError('You are already logged in. Please log out first.');
+        } else {
+          this.notificationService.showError('Login failed: ' + error.error.message)
+        }
         console.error('Login failed', error);
       }
     );

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { Address } from '../models/user.model';
 
 @Injectable({
@@ -20,6 +20,9 @@ export class AuthService {
 
   // for login
   public login(credentials: any): Observable<any> {
+    if (this.currentUserSubject.value){
+      return throwError(() => new Error('User is already logged in.'));
+    }
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap(user => {
         this.currentUserSubject.next(user);
