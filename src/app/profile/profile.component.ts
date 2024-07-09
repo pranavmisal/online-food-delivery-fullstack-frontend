@@ -5,7 +5,6 @@ import { AuthService } from '../auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
 import { NotificationService } from '../services/notification.service';
-import { Address } from '../models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +14,11 @@ import { Address } from '../models/user.model';
 export class ProfileComponent {
   public orderHistory: OrderHistory[] = [];
   public user: any;
+  public paginatedOrderHistory: OrderHistory[] = [];
+  public pageSize = 3;
+  public currentPage = 0;
+  public totalPages = 0;
+  public filteredOrderHistory: OrderHistory[] = [];
 
   constructor(
     public orderService: OrderService, 
@@ -45,11 +49,56 @@ export class ProfileComponent {
     this.orderService.getOrderHistory().subscribe(
       (data: OrderHistory[]) => {
         this.orderHistory = data;
+        this.filteredOrderHistory = this.orderHistory;
+        this.updatePagination();
       },
       error => {
         console.error('Error fetching order history:', error);
       }
     );
+  }
+
+  // prev page
+  public prevPage(){
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePaginatedOrderHistory();
+    }
+  }
+
+  // next page
+  public nextPage(){
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.updatePaginatedOrderHistory();
+    }
+  }
+
+  public updatePagination(){
+    this.totalPages = Math.ceil(this.filteredOrderHistory.length / this.pageSize);
+    this.updatePaginatedOrderHistory();
+  }
+
+  public updatePaginatedOrderHistory(){
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedOrderHistory = this.filteredOrderHistory.slice(startIndex, endIndex);
+  }
+
+  // date filter
+  public applyDateFilter(event: Event){
+    const input = event .target as HTMLInputElement;
+    const selectedDate = new Date(input.value);
+    if (input.value) {
+      this.filteredOrderHistory = this.orderHistory.filter(order => {
+        const orderDate = new Date(order.order_date);
+        return orderDate.toDateString() === selectedDate.toDateString();
+      });
+    } else {
+      this.filteredOrderHistory = this.orderHistory;
+    }
+    this.currentPage = 0;
+    this.updatePagination();
   }
 
   // open profile editing dialog
@@ -74,6 +123,7 @@ export class ProfileComponent {
     })
   }
   
+  // submit review and rating for an order
   public submitReviewRating(reviewRating: {rating: number, review: string}, order: OrderHistory){
     this.orderService.submitReview(order.id, reviewRating).subscribe(
       updatedOrder => {
