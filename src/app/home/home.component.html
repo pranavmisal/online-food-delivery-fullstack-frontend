@@ -1,5 +1,8 @@
-<div class="restaurant-container" style="display: flex; flex-wrap: wrap;">
-  <mat-card *ngFor="let restaurant of restaurants" class="restaurant-card" (click)="selectRestaurant(restaurant)">
+<div class="search-container">
+  <input type="text" placeholder="Search for restaurants or menu items..." (input)="applySearchFilter($event)" class="search-input">
+</div>
+<div *ngIf="filteredRestaurants.length > 0" class="restaurant-container" style="display: flex; flex-wrap: wrap;">
+  <mat-card *ngFor="let restaurant of filteredRestaurants" class="restaurant-card" (click)="selectRestaurant(restaurant)">
     <mat-card-header>
       <img mat-card-avatar [src]="restaurant.image_url" alt="Restaurant Image">
       <mat-card-title>{{ restaurant.name }}</mat-card-title>
@@ -10,10 +13,10 @@
   </mat-card>
 </div>
 
-<div *ngIf="selectedRestaurant" class="mt-4">
+<div *ngIf="selectedRestaurant && filteredMenus.length > 0" class="mt-4">
   <h3>Menu Items for {{selectedRestaurant.name}}</h3>
   <ul class="list-group" style="display: flex; list-style-type: none;">
-    <li class="list-group-item d-flex justify-content-between align-items-center" style="border: 1px solid lightgray; padding: 10px; border-radius: 5px; margin: 10px;" *ngFor="let menuItem of menus">
+    <li class="list-group-item d-flex justify-content-between align-items-center" style="border: 1px solid lightgray; padding: 10px; border-radius: 5px; margin: 10px;" *ngFor="let menuItem of filteredMenus">
       <div>
         <h4 class="mb-1">{{menuItem.name}}</h4>
         <p class="mb-1">{{menuItem.description}}</p>
@@ -31,4 +34,9 @@
       </div>
     </li>
   </ul>
+</div>
+
+<!-- if now results are found -->
+<div *ngIf="filteredRestaurants.length === 0 && filteredMenus.length === 0">
+  <p>No results found for your search.</p>
 </div>

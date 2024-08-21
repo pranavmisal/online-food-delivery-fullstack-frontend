@@ -1,0 +1,25 @@
+ 
+Row 1
+1. Required: Select the Requesting Clinician from the list
+2. Optional: Select a specific Presenter or leave it blank for the Tumor Board Organizer to assign the Presenter
+3. Required: Select any additional care team members e.g. nurse from the list
+ 
+ 
+ 
+Row 2
+1. Required: Select all the reviews that are required e.g Imaging, Path from the list
+2. Optional: Only change the objective if it is different than 'Treatment Planning'
+3. Provide any current cancer diagnosis including ICD and description. If not yet diagnosed enter "To be diagnosed"
+ 
+ 
+ 
+Row 3
+1. Required if Pathology Review is selected: Provide the Pathology report name, location the pathology was done and date for the pathology report for the Pathologist to review for case presentation
+2. Required if imaging review is selected: Provide the Imaging report name, location of the imaging (or outside) and date of the imaging report for the Radiologist to review for case presentation.
+3. Optional: Select a clinical trial from the list if there is a matching trial for the patient
+ 
+ 
+ 
+Row 4
+1. Optional: Provide a brief clinical summary for the case including cancer diagnosis, staging, prior cancer history, social history and treatment till date. This will be added to the case list email pdf sent out to the Tumor Board participants. 
+ 
